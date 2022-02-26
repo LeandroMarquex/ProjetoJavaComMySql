@@ -25,6 +25,7 @@ public class frmLogin extends javax.swing.JFrame {
     
     public frmLogin() {
         initComponents();
+        setSize(597,400);
     }
 
     /**
@@ -41,51 +42,35 @@ public class frmLogin extends javax.swing.JFrame {
         txt_usuario = new javax.swing.JTextField();
         txt_senha = new javax.swing.JPasswordField();
         btn_login = new javax.swing.JButton();
+        lb_fundo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(null);
 
         jLabel1.setText("USUUÁRIO");
+        getContentPane().add(jLabel1);
+        jLabel1.setBounds(190, 170, 65, 14);
 
         jLabel2.setText("SENHA:");
+        getContentPane().add(jLabel2);
+        jLabel2.setBounds(200, 240, 37, 14);
+        getContentPane().add(txt_usuario);
+        txt_usuario.setBounds(180, 160, 340, 40);
+        getContentPane().add(txt_senha);
+        txt_senha.setBounds(180, 220, 340, 50);
 
+        btn_login.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/projetojavamysql/img/cadeado icone 40x40.png"))); // NOI18N
         btn_login.setText("LOGIN");
         btn_login.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        getContentPane().add(btn_login);
+        btn_login.setBounds(300, 280, 210, 50);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(43, 43, 43)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btn_login)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txt_usuario, javax.swing.GroupLayout.DEFAULT_SIZE, 222, Short.MAX_VALUE)
-                            .addComponent(txt_senha))))
-                .addContainerGap(66, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(45, 45, 45)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(txt_usuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(txt_senha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(btn_login)
-                .addContainerGap(156, Short.MAX_VALUE))
-        );
+        lb_fundo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/projetojavamysql/img/login.jpg"))); // NOI18N
+        getContentPane().add(lb_fundo);
+        lb_fundo.setBounds(0, 0, 597, 400);
 
-        pack();
+        setSize(new java.awt.Dimension(551, 400));
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     /**
@@ -127,6 +112,7 @@ public class frmLogin extends javax.swing.JFrame {
     private javax.swing.JButton btn_login;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel lb_fundo;
     private javax.swing.JPasswordField txt_senha;
     private javax.swing.JTextField txt_usuario;
     // End of variables declaration//GEN-END:variables
