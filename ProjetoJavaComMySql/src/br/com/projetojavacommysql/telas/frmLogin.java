@@ -4,6 +4,8 @@
  * and open the template in the editor.
  */
 package br.com.projetojavacommysql.telas;
+import br.com.projetojavacommysql.dao.ModuloConexao;
+import java.sql.*;
 
 /**
  *
@@ -25,7 +27,12 @@ public class frmLogin extends javax.swing.JFrame {
     
     public frmLogin() {
         initComponents();
-        setSize(597,400);
+        Connection conexao = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        
+        conexao = ModuloConexao.conector();
+        System.out.println(conexao);
     }
 
     /**
