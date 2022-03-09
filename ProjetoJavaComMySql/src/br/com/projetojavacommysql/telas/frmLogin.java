@@ -13,6 +13,8 @@ import java.sql.*;
  */
 public class frmLogin extends javax.swing.JFrame {
 
+  
+
     /**
      * Creates new form frmLogin
      */
@@ -32,7 +34,12 @@ public class frmLogin extends javax.swing.JFrame {
         ResultSet rs = null;
         
         conexao = ModuloConexao.conector();
-        System.out.println(conexao);
+     //   System.out.println(conexao);
+     if(conexao != null) {
+         lb_status.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/projetojavamysql/img/dbok.png")));
+     } else {
+          lb_status.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/projetojavamysql/img/dberro.png")));
+     }
     }
 
     /**
@@ -49,34 +56,41 @@ public class frmLogin extends javax.swing.JFrame {
         txt_usuario = new javax.swing.JTextField();
         txt_senha = new javax.swing.JPasswordField();
         btn_login = new javax.swing.JButton();
+        lb_status = new javax.swing.JLabel();
         lb_fundo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
         getContentPane().setLayout(null);
 
         jLabel1.setText("USUUÁRIO");
         getContentPane().add(jLabel1);
-        jLabel1.setBounds(190, 170, 65, 14);
+        jLabel1.setBounds(230, 170, 80, 14);
 
         jLabel2.setText("SENHA:");
         getContentPane().add(jLabel2);
-        jLabel2.setBounds(200, 240, 37, 14);
+        jLabel2.setBounds(230, 240, 80, 14);
         getContentPane().add(txt_usuario);
-        txt_usuario.setBounds(180, 160, 340, 40);
+        txt_usuario.setBounds(210, 160, 340, 40);
         getContentPane().add(txt_senha);
-        txt_senha.setBounds(180, 220, 340, 50);
+        txt_senha.setBounds(210, 220, 340, 50);
 
         btn_login.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/projetojavamysql/img/cadeado icone 40x40.png"))); // NOI18N
         btn_login.setText("LOGIN");
         btn_login.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         getContentPane().add(btn_login);
-        btn_login.setBounds(300, 280, 210, 50);
+        btn_login.setBounds(340, 280, 210, 50);
+
+        lb_status.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/projetojavamysql/img/dberro.png"))); // NOI18N
+        getContentPane().add(lb_status);
+        lb_status.setBounds(38, 64, 100, 40);
 
         lb_fundo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/projetojavamysql/img/login.jpg"))); // NOI18N
+        lb_fundo.setPreferredSize(new java.awt.Dimension(581, 397));
         getContentPane().add(lb_fundo);
-        lb_fundo.setBounds(0, 0, 597, 400);
+        lb_fundo.setBounds(30, 0, 540, 400);
 
-        setSize(new java.awt.Dimension(551, 400));
+        setSize(new java.awt.Dimension(581, 397));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -120,6 +134,7 @@ public class frmLogin extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel lb_fundo;
+    private javax.swing.JLabel lb_status;
     private javax.swing.JPasswordField txt_senha;
     private javax.swing.JTextField txt_usuario;
     // End of variables declaration//GEN-END:variables
