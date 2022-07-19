@@ -84,14 +84,10 @@ public class frmLogin extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
         getContentPane().setLayout(null);
-
-        jLabel1.setText("USUUÁRIO");
         getContentPane().add(jLabel1);
-        jLabel1.setBounds(230, 170, 80, 14);
-
-        jLabel2.setText("SENHA:");
+        jLabel1.setBounds(230, 170, 80, 0);
         getContentPane().add(jLabel2);
-        jLabel2.setBounds(230, 240, 80, 14);
+        jLabel2.setBounds(230, 240, 80, 10);
         getContentPane().add(txt_usuario);
         txt_usuario.setBounds(210, 160, 340, 40);
         getContentPane().add(txt_senha);
