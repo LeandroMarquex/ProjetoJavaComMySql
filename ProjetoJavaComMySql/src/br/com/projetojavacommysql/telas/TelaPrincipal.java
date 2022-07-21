@@ -90,6 +90,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         menuCad.add(menuCadCli);
 
         menuCadUsu.setText("Usuarios");
+        menuCadUsu.setEnabled(false);
         menuCad.add(menuCadUsu);
 
         menu.add(menuCad);
@@ -97,6 +98,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
         menuAjuda.setText("Ajuda");
 
         menuSobre.setText("Sobre");
+        menuSobre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuSobreActionPerformed(evt);
+            }
+        });
         menuAjuda.add(menuSobre);
 
         menu.add(menuAjuda);
@@ -173,6 +179,12 @@ public class TelaPrincipal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
+    private void menuSobreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuSobreActionPerformed
+        // TODO add your handling code here:
+        TelaSobre sobre = new TelaSobre();
+        sobre.setVisible(true);
+    }//GEN-LAST:event_menuSobreActionPerformed
+
     /**
          * @param args the command line arguments
          */
@@ -229,7 +241,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu menuAjuda;
     private javax.swing.JMenu menuCad;
     private javax.swing.JMenuItem menuCadCli;
-    private javax.swing.JMenuItem menuCadUsu;
+    public static javax.swing.JMenuItem menuCadUsu;
     private javax.swing.JMenuItem menuSobre;
     // End of variables declaration//GEN-END:variables
 }

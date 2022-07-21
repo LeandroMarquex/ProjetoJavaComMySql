@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package br.com.projetojavacommysql.telas;
+
 import br.com.projetojavacommysql.dao.ModuloConexao;
 import java.sql.*;
 import javax.swing.JOptionPane;
@@ -14,61 +15,68 @@ import javax.swing.JOptionPane;
  */
 public class frmLogin extends javax.swing.JFrame {
 
-  Connection conexao = null;
-  PreparedStatement pst = null;
-  ResultSet rs = null;
-  
-   public void logar(){
-            String sql = "select * from tbusuarios where login = ? and senha = ? ";
-            
-            try {
-                pst = conexao.prepareStatement(sql);
-                pst.setString(1, txt_usuario.getText());
-                pst.setString(2, txt_senha.getText());
-                
-                // executar a query - consulta
-                rs = pst.executeQuery();
-                if (rs.next()) {
+    Connection conexao = null;
+    PreparedStatement pst = null;
+    ResultSet rs = null;
+
+    public void logar() {
+        String sql = "select * from tbusuarios where login = ? and senha = ? ";
+
+        try {
+            pst = conexao.prepareStatement(sql);
+            pst.setString(1, txt_usuario.getText());
+            pst.setString(2, txt_senha.getText());
+
+            // executar a query - consulta
+            rs = pst.executeQuery();
+            if (rs.next()) {
+                String perfil = rs.getString(6);
+                //          System.out.println(perfil);
+                if (perfil.equals("admin")) {
+
                     TelaPrincipal principal = new TelaPrincipal();
                     principal.setVisible(true);
+                    TelaPrincipal.menuCadUsu.setEnabled(true);
                     this.dispose();
                     conexao.close();
-                    
                 } else {
-                    JOptionPane.showMessageDialog(null, "Usuario ou Senha inválido");
+                    TelaPrincipal principal = new TelaPrincipal();
+                    principal.setVisible(true);
+                    //TelaPrincipal.menuCadUsu.setEnabled(true);
+                    this.dispose();
+                    conexao.close();
                 }
-            } catch (Exception e) {
-                
-                JOptionPane.showMessageDialog(null, e);
+
+            } else {
+                JOptionPane.showMessageDialog(null, "Usuario ou Senha inválido");
             }
+        } catch (Exception e) {
+
+            JOptionPane.showMessageDialog(null, e);
         }
+    }
 
     /**
      * Creates new form frmLogin
      */
-    
-       /**
+    /**
      * TESTE DE PULL 26/02/2022
      */
-    
-      /**
-     * TESTE DE COMMIT  26/02/2022 19:03
+    /**
+     * TESTE DE COMMIT 26/02/2022 19:03
      */
-    
-   public frmLogin() {
+    public frmLogin() {
         initComponents();
-        
+
         conexao = ModuloConexao.conector();
-     //   System.out.println(conexao);
-     if(conexao != null) {
-         lb_status.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/projetojavamysql/img/dbok.png")));
-     } else {
-          lb_status.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/projetojavamysql/img/dberro.png")));
-     }
+        //   System.out.println(conexao);
+        if (conexao != null) {
+            lb_status.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/projetojavamysql/img/dbok.png")));
+        } else {
+            lb_status.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/projetojavamysql/img/dberro.png")));
+        }
     }
 
-    
-    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
