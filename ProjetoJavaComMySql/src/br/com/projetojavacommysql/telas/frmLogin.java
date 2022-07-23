@@ -6,6 +6,7 @@
 package br.com.projetojavacommysql.telas;
 
 import br.com.projetojavacommysql.dao.ModuloConexao;
+import java.awt.Color;
 import java.sql.*;
 import javax.swing.JOptionPane;
 
@@ -37,11 +38,15 @@ public class frmLogin extends javax.swing.JFrame {
                     TelaPrincipal principal = new TelaPrincipal();
                     principal.setVisible(true);
                     TelaPrincipal.menuCadUsu.setEnabled(true);
+                    TelaPrincipal.lbl_usuario.setText(rs.getString(2));
+                    TelaPrincipal.lbl_usuario.setForeground(Color.red);
                     this.dispose();
                     conexao.close();
                 } else {
                     TelaPrincipal principal = new TelaPrincipal();
                     principal.setVisible(true);
+                    TelaPrincipal.lbl_usuario.setText(rs.getString(2));
+                    TelaPrincipal.lbl_usuario.setForeground(Color.yellow);
                     //TelaPrincipal.menuCadUsu.setEnabled(true);
                     this.dispose();
                     conexao.close();
