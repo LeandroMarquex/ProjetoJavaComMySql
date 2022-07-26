@@ -5,17 +5,58 @@
  */
 package br.com.projetojavacommysql.telas;
 
+import br.com.projetojavacommysql.dao.ModuloConexao;
+import java.sql.*;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Leandro Marques
  */
 public class TelaUsuario extends javax.swing.JInternalFrame {
 
+    Connection conexao = null;
+    PreparedStatement pst = null;
+    ResultSet rs = null;
+
     /**
      * Creates new form TelaUsuario
      */
     public TelaUsuario() {
         initComponents();
+        conexao = ModuloConexao.conector();
+    }
+
+    private void consultar() {
+        String sql = "Select * from tbusuarios where iduser = ?";
+        try {
+            pst = conexao.prepareStatement(sql);
+            pst.setString(1, txtid.getText());
+            rs = pst.executeQuery();
+
+            if (rs.next()) {
+                txtNome.setText(rs.getString(2));
+                txtTelefone.setText(rs.getString(3));
+                txtLogin.setText(rs.getString(4));
+                txtSenha.setText(rs.getString(5));
+                cbPerfil.setSelectedItem(rs.getString(6));
+            } else {
+                JOptionPane.showMessageDialog(null, "Usuário não Cadastrado");
+                limpar();
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }
+
+    private void limpar() {
+
+        txtNome.setText("");
+        txtTelefone.setText("");
+        txtLogin.setText("");
+        txtSenha.setText("");
+        cbPerfil.setSelectedItem(null);
+
     }
 
     /**
@@ -74,12 +115,21 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
         jLabel6.setText("TELEFONE");
 
         btnInserir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/projetojavamysql/img/inserir.png"))); // NOI18N
+        btnInserir.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         btnDeletar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/projetojavamysql/img/deletar.png"))); // NOI18N
+        btnDeletar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         btnEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/projetojavamysql/img/editar.png"))); // NOI18N
+        btnEditar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/projetojavamysql/img/buscar.png"))); // NOI18N
+        btnBuscar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
 
         jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/projetojavamysql/img/users.png"))); // NOI18N
 
@@ -175,6 +225,11 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
     private void txtidActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtidActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtidActionPerformed
+
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        // TODO add your handling code here:
+        consultar();
+    }//GEN-LAST:event_btnBuscarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
