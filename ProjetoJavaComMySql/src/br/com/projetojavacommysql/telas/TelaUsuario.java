@@ -59,6 +59,32 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
 
     }
 
+    private void adicionar() {
+        String sql = "insert into tbusuarios(iduser, usuario, telefone, login, senha, perfil) values (?,?,?,?,?,?)";
+        try {
+            pst = conexao.prepareStatement(sql);
+            pst.setString(1, txtid.getText());
+            pst.setString(2, txtNome.getText());
+            pst.setString(3, txtTelefone.getText());
+            pst.setString(4, txtLogin.getText());
+            pst.setString(5, txtSenha.getText());
+            pst.setString(6, cbPerfil.getSelectedItem().toString());
+            
+            int adicionado = pst.executeUpdate();
+            if (adicionado > 0) {
+                  JOptionPane.showMessageDialog(null, "Registro feito com SUCESSO.");
+                  limpar();
+            }
+            
+            
+            pst.executeUpdate();
+        } catch (Exception e) {
+               JOptionPane.showMessageDialog(null, e);
+               System.out.println(e);
+        }
+
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -116,6 +142,11 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
 
         btnInserir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/projetojavamysql/img/inserir.png"))); // NOI18N
         btnInserir.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnInserir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnInserirActionPerformed(evt);
+            }
+        });
 
         btnDeletar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/projetojavamysql/img/deletar.png"))); // NOI18N
         btnDeletar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -230,6 +261,11 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         consultar();
     }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void btnInserirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInserirActionPerformed
+        // TODO add your handling code here:
+        adicionar();
+    }//GEN-LAST:event_btnInserirActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
