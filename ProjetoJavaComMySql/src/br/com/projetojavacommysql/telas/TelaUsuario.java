@@ -58,6 +58,7 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
         cbPerfil.setSelectedItem(null);
 
     }
+    //Aula - 44 -Cadastrando Usuario
 
     private void adicionar() {
         String sql = "insert into tbusuarios(iduser, usuario, telefone, login, senha, perfil) values (?,?,?,?,?,?)";
@@ -69,18 +70,17 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
             pst.setString(4, txtLogin.getText());
             pst.setString(5, txtSenha.getText());
             pst.setString(6, cbPerfil.getSelectedItem().toString());
-            
+
             int adicionado = pst.executeUpdate();
             if (adicionado > 0) {
-                  JOptionPane.showMessageDialog(null, "Registro feito com SUCESSO.");
-                  limpar();
+                JOptionPane.showMessageDialog(null, "Registro feito com SUCESSO.");
+                limpar();
             }
-            
-            
+
             pst.executeUpdate();
         } catch (Exception e) {
-               JOptionPane.showMessageDialog(null, e);
-               System.out.println(e);
+            JOptionPane.showMessageDialog(null, e);
+            System.out.println(e);
         }
 
     }
