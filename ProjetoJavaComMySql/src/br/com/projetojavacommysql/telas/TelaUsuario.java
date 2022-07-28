@@ -51,6 +51,7 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
 
     private void limpar() {
 
+        txtid.setText("");
         txtNome.setText("");
         txtTelefone.setText("");
         txtLogin.setText("");
@@ -71,13 +72,18 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
             pst.setString(5, txtSenha.getText());
             pst.setString(6, cbPerfil.getSelectedItem().toString());
 
-            int adicionado = pst.executeUpdate();
-            if (adicionado > 0) {
-                JOptionPane.showMessageDialog(null, "Registro feito com SUCESSO.");
-                limpar();
+            if ((txtNome.getText().isEmpty()) || (txtNome.getText().isEmpty()) || (txtLogin.getText().isEmpty()) || (txtSenha.getText().isEmpty()) || (cbPerfil.getSelectedItem().equals(""))) {
+
+                JOptionPane.showMessageDialog(null, "Preencha os DADOS!!");
+            } else {
+
+                int adicionado = pst.executeUpdate();
+                if (adicionado > 0) {
+                    JOptionPane.showMessageDialog(null, "Registro feito com SUCESSO.");
+                    limpar();
+                }
             }
 
-            pst.executeUpdate();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
             System.out.println(e);
