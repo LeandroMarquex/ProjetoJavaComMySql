@@ -59,6 +59,36 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
         cbPerfil.setSelectedItem(null);
 
     }
+
+    private void alterar() {
+        String sql = "update tbusuarios set usuario = ?, telefone = ?, login = ?, senha = ?, perfil = ? where iduser = ?";
+
+        try {
+            pst = conexao.prepareStatement(sql);
+
+            pst.setString(1, txtNome.getText());
+            pst.setString(2, txtTelefone.getText());
+            pst.setString(3, txtLogin.getText());
+            pst.setString(4, txtSenha.getText());
+            pst.setString(5, cbPerfil.getSelectedItem().toString());
+            pst.setString(6, txtid.getText());
+
+            if ((txtNome.getText().isEmpty()) || (txtNome.getText().isEmpty()) || (txtLogin.getText().isEmpty()) || (txtSenha.getText().isEmpty()) || (cbPerfil.getSelectedItem().equals(""))) {
+
+                JOptionPane.showMessageDialog(null, "Preencha os DADOS!!");
+            } else {
+
+                int adicionado = pst.executeUpdate();
+                if (adicionado > 0) {
+                    JOptionPane.showMessageDialog(null, "Registro EDITADO com SUCESSO.");
+                    limpar();
+                }
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Usuário não EDITADO");
+            limpar();
+        }
+    }
     //Aula - 44 -Cadastrando Usuario
 
     private void adicionar() {
@@ -89,6 +119,24 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
             System.out.println(e);
         }
 
+    }
+
+    private void remover() {
+        int confirma = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja EXCLUIR o USUÁRIO?", "ATENÇÃO", JOptionPane.YES_NO_OPTION);
+        if (confirma == JOptionPane.YES_OPTION) {
+            String sql = "delete from tbusuarios where iduser = ?";
+
+            try {
+                pst = conexao.prepareStatement(sql);
+                pst.setString(1, txtid.getText());
+                pst.executeUpdate();
+                JOptionPane.showMessageDialog(null, "Registro DELETADO com SUCESSO.");
+                limpar();
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, e);
+                System.out.println(e);
+            }
+        }
     }
 
     /**
@@ -156,9 +204,19 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
 
         btnDeletar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/projetojavamysql/img/deletar.png"))); // NOI18N
         btnDeletar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnDeletar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeletarActionPerformed(evt);
+            }
+        });
 
         btnEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/projetojavamysql/img/editar.png"))); // NOI18N
         btnEditar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
+            }
+        });
 
         btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/projetojavamysql/img/buscar.png"))); // NOI18N
         btnBuscar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -272,6 +330,16 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         adicionar();
     }//GEN-LAST:event_btnInserirActionPerformed
+
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        // TODO add your handling code here:
+        alterar();
+    }//GEN-LAST:event_btnEditarActionPerformed
+
+    private void btnDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletarActionPerformed
+        // TODO add your handling code here:
+        remover();
+    }//GEN-LAST:event_btnDeletarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
