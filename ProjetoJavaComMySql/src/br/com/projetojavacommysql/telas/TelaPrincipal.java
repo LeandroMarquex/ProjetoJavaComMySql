@@ -88,6 +88,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
         menuCad.setText("Cadastros");
 
         menuCadCli.setText("Clientes");
+        menuCadCli.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuCadCliActionPerformed(evt);
+            }
+        });
         menuCad.add(menuCadCli);
 
         menuCadUsu.setText("Usuarios");
@@ -181,7 +186,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         // TODO add your handling code here:
-         int sair;
+        int sair;
         sair = JOptionPane.showConfirmDialog(null, "Deseja Sair?", "Atenção", JOptionPane.YES_NO_OPTION);
         if (sair == JOptionPane.YES_OPTION) {
             System.exit(0);
@@ -201,9 +206,16 @@ public class TelaPrincipal extends javax.swing.JFrame {
         desktop.add(usuario);
     }//GEN-LAST:event_menuCadUsuActionPerformed
 
+    private void menuCadCliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuCadCliActionPerformed
+        // TODO add your handling code here:
+        TelaClientes clientes = new TelaClientes();
+        clientes.setVisible(true);
+        desktop.add(clientes);
+    }//GEN-LAST:event_menuCadCliActionPerformed
+
     /**
-         * @param args the command line arguments
-         */
+     * @param args the command line arguments
+     */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
