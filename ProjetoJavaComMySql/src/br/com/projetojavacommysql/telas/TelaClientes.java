@@ -8,6 +8,7 @@ package br.com.projetojavacommysql.telas;
 import br.com.projetojavacommysql.dao.ModuloConexao;
 import java.sql.*;
 import javax.swing.JOptionPane;
+import net.proteanit.sql.DbUtils;
 
 /**
  *
@@ -28,21 +29,15 @@ public class TelaClientes extends javax.swing.JInternalFrame {
     }
 
     private void consultar() {
-        String sql = "Select * from tbusuarios where iduser = ?";
+        String sql = "Select * from tbclientes where nomecli like ?";
         try {
             pst = conexao.prepareStatement(sql);
-            pst.setString(1, txtid.getText());
+            pst.setString(1, txtBuscar.getText() + "%");
             rs = pst.executeQuery();
 
-            if (rs.next()) {
-                txtNome.setText(rs.getString(2));
-                txtEndereco.setText(rs.getString(3));
-                txtEmail.setText(rs.getString(4));
-                
-            } else {
-                JOptionPane.showMessageDialog(null, "Usuário não Cadastrado");
-                limpar();
-            }
+            // usar a biblioteca rs2 xml para preencher a tabela
+            tblClientes.setModel(DbUtils.resultSetToTableModel(rs));
+
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
         }
@@ -53,22 +48,23 @@ public class TelaClientes extends javax.swing.JInternalFrame {
         txtid.setText("");
         txtNome.setText("");
         txtEndereco.setText("");
+        txtTelefone.setText("");
         txtEmail.setText("");
-        
 
     }
 
     private void alterar() {
-        String sql = "update tbusuarios set usuario = ?, telefone = ?, login = ?, senha = ?, perfil = ? where iduser = ?";
+        String sql = "update tbclientes set nomecli = ?, endcli = ?, fonecli = ?, emailcli where idcli = ?";
 
         try {
             pst = conexao.prepareStatement(sql);
 
             pst.setString(1, txtNome.getText());
             pst.setString(2, txtEndereco.getText());
-            pst.setString(3, txtEmail.getText());
-            
-            pst.setString(6, txtid.getText());
+            pst.setString(3, txtTelefone.getText());
+            pst.setString(4, txtEmail.getText());
+
+            pst.setString(5, txtid.getText());
 
             if ((txtNome.getText().isEmpty()) || (txtNome.getText().isEmpty()) || (txtEmail.getText().isEmpty())) {
 
@@ -89,16 +85,16 @@ public class TelaClientes extends javax.swing.JInternalFrame {
     //Aula - 44 -Cadastrando Usuario
 
     private void adicionar() {
-        String sql = "insert into tbusuarios(iduser, usuario, telefone, login, senha, perfil) values (?,?,?,?,?,?)";
+        String sql = "insert into tbclientes(idcli, nomecli, endcli, fonecli, emailcli) values (?,?,?,?,?)";
         try {
             pst = conexao.prepareStatement(sql);
             pst.setString(1, txtid.getText());
             pst.setString(2, txtNome.getText());
             pst.setString(3, txtEndereco.getText());
-            pst.setString(4, txtEmail.getText());
-          
+            pst.setString(4, txtTelefone.getText());
+            pst.setString(5, txtEmail.getText());
 
-            if ((txtNome.getText().isEmpty()) || (txtNome.getText().isEmpty()) || (txtEmail.getText().isEmpty())) {
+            if ((txtNome.getText().isEmpty()) || (txtEndereco.getText().isEmpty()) || (txtTelefone.getText().isEmpty()) || (txtEmail.getText().isEmpty())) {
 
                 JOptionPane.showMessageDialog(null, "Preencha os DADOS!!");
             } else {
@@ -120,7 +116,7 @@ public class TelaClientes extends javax.swing.JInternalFrame {
     private void remover() {
         int confirma = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja EXCLUIR o USUÁRIO?", "ATENÇÃO", JOptionPane.YES_NO_OPTION);
         if (confirma == JOptionPane.YES_OPTION) {
-            String sql = "delete from tbusuarios where iduser = ?";
+            String sql = "delete from tbclientes where idcli = ?";
 
             try {
                 pst = conexao.prepareStatement(sql);
@@ -133,6 +129,11 @@ public class TelaClientes extends javax.swing.JInternalFrame {
                 System.out.println(e);
             }
         }
+    }
+
+    public void setar_campos() {
+        
+        int setar = tblClientes.getSelectedRow();
     }
 
     /**
@@ -162,7 +163,7 @@ public class TelaClientes extends javax.swing.JInternalFrame {
         jLabel5 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblClientes = new javax.swing.JTable();
 
         setClosable(true);
         setIconifiable(true);
@@ -217,12 +218,22 @@ public class TelaClientes extends javax.swing.JInternalFrame {
                 txtBuscarActionPerformed(evt);
             }
         });
+        txtBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtBuscarKeyReleased(evt);
+            }
+        });
 
         jLabel5.setText("BUSCAR");
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/projetojavamysql/img/buscar pequeno.png"))); // NOI18N
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblClientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -233,7 +244,7 @@ public class TelaClientes extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tblClientes);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -299,11 +310,11 @@ public class TelaClientes extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel7)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addComponent(jLabel5)
-                                .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jButton1))
+                                .addComponent(jButton1))
+                            .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(12, 12, 12)
@@ -358,6 +369,16 @@ public class TelaClientes extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtBuscarActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        consultar();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void txtBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyReleased
+        // TODO add your handling code here:
+        consultar();
+    }//GEN-LAST:event_txtBuscarKeyReleased
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDeletar;
@@ -372,7 +393,7 @@ public class TelaClientes extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tblClientes;
     private javax.swing.JTextField txtBuscar;
     private javax.swing.JTextField txtEmail;
     private javax.swing.JTextField txtEndereco;
