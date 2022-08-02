@@ -54,7 +54,7 @@ public class TelaClientes extends javax.swing.JInternalFrame {
     }
 
     private void alterar() {
-        String sql = "update tbclientes set nomecli = ?, endcli = ?, fonecli = ?, emailcli where idcli = ?";
+        String sql = "update tbclientes set nomecli = ?, endcli = ?, fonecli = ?, emailcli = ? where idcli = ?";
 
         try {
             pst = conexao.prepareStatement(sql);
@@ -66,7 +66,7 @@ public class TelaClientes extends javax.swing.JInternalFrame {
 
             pst.setString(5, txtid.getText());
 
-            if ((txtNome.getText().isEmpty()) || (txtNome.getText().isEmpty()) || (txtEmail.getText().isEmpty())) {
+            if ((txtNome.getText().isEmpty()) || (txtTelefone.getText().isEmpty()) || (txtEmail.getText().isEmpty())) {
 
                 JOptionPane.showMessageDialog(null, "Preencha os DADOS!!");
             } else {
@@ -132,8 +132,13 @@ public class TelaClientes extends javax.swing.JInternalFrame {
     }
 
     public void setar_campos() {
-        
+
         int setar = tblClientes.getSelectedRow();
+        txtid.setText(tblClientes.getModel().getValueAt(setar, 0).toString());
+        txtNome.setText(tblClientes.getModel().getValueAt(setar, 1).toString());
+        txtEndereco.setText(tblClientes.getModel().getValueAt(setar, 2).toString());
+        txtTelefone.setText(tblClientes.getModel().getValueAt(setar, 3).toString());
+        txtEmail.setText(tblClientes.getModel().getValueAt(setar, 4).toString());
     }
 
     /**
@@ -145,7 +150,7 @@ public class TelaClientes extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
+        lblid = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -170,8 +175,13 @@ public class TelaClientes extends javax.swing.JInternalFrame {
         setMaximizable(true);
         setTitle("CLIENTES");
         setPreferredSize(new java.awt.Dimension(695, 495));
+        addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                formComponentShown(evt);
+            }
+        });
 
-        jLabel1.setText("ID");
+        lblid.setText("ID");
 
         jLabel2.setText("NOME");
 
@@ -235,15 +245,20 @@ public class TelaClientes extends javax.swing.JInternalFrame {
 
         tblClientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "ID", "NOME", "ENDEREÇO", "TELEFONE", "EMAIL"
             }
         ));
+        tblClientes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblClientesMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblClientes);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -269,7 +284,7 @@ public class TelaClientes extends javax.swing.JInternalFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblid, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel6)
                             .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -319,7 +334,7 @@ public class TelaClientes extends javax.swing.JInternalFrame {
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(12, 12, 12)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel1)
+                    .addComponent(lblid)
                     .addComponent(txtid, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -379,13 +394,23 @@ public class TelaClientes extends javax.swing.JInternalFrame {
         consultar();
     }//GEN-LAST:event_txtBuscarKeyReleased
 
+    private void tblClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblClientesMouseClicked
+        // TODO add your handling code here:
+        setar_campos();
+    }//GEN-LAST:event_tblClientesMouseClicked
+
+    private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
+        // TODO add your handling code here:
+        txtid.setVisible(false);
+        lblid.setVisible(false);
+    }//GEN-LAST:event_formComponentShown
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDeletar;
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnInserir;
     private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -393,6 +418,7 @@ public class TelaClientes extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblid;
     private javax.swing.JTable tblClientes;
     private javax.swing.JTextField txtBuscar;
     private javax.swing.JTextField txtEmail;
