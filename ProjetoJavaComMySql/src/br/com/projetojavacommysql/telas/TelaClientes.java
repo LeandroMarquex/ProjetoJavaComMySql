@@ -65,7 +65,8 @@ public class TelaClientes extends javax.swing.JInternalFrame {
             pst.setString(4, txtEmail.getText());
 
             pst.setString(5, txtid.getText());
-
+            btnInserir.setEnabled(true);
+            txtBuscar.setText(txtNome.getText());
             if ((txtNome.getText().isEmpty()) || (txtTelefone.getText().isEmpty()) || (txtEmail.getText().isEmpty())) {
 
                 JOptionPane.showMessageDialog(null, "Preencha os DADOS!!");
@@ -85,14 +86,16 @@ public class TelaClientes extends javax.swing.JInternalFrame {
     //Aula - 44 -Cadastrando Usuario
 
     private void adicionar() {
-        String sql = "insert into tbclientes(idcli, nomecli, endcli, fonecli, emailcli) values (?,?,?,?,?)";
+        String sql = "insert into tbclientes(nomecli, endcli, fonecli, emailcli) values (?,?,?,?)";
         try {
             pst = conexao.prepareStatement(sql);
-            pst.setString(1, txtid.getText());
-            pst.setString(2, txtNome.getText());
-            pst.setString(3, txtEndereco.getText());
-            pst.setString(4, txtTelefone.getText());
-            pst.setString(5, txtEmail.getText());
+    //        pst.setString(1, txtid.getText());)
+            pst.setString(1, txtNome.getText());
+            pst.setString(2, txtEndereco.getText());
+            pst.setString(3, txtTelefone.getText());
+            pst.setString(4, txtEmail.getText());
+            btnInserir.setEnabled(true);
+            txtBuscar.setText(txtNome.getText());
 
             if ((txtNome.getText().isEmpty()) || (txtEndereco.getText().isEmpty()) || (txtTelefone.getText().isEmpty()) || (txtEmail.getText().isEmpty())) {
 
@@ -122,6 +125,7 @@ public class TelaClientes extends javax.swing.JInternalFrame {
                 pst = conexao.prepareStatement(sql);
                 pst.setString(1, txtid.getText());
                 pst.executeUpdate();
+                btnInserir.setEnabled(true);
                 JOptionPane.showMessageDialog(null, "Registro DELETADO com SUCESSO.");
                 limpar();
             } catch (Exception e) {
@@ -139,6 +143,7 @@ public class TelaClientes extends javax.swing.JInternalFrame {
         txtEndereco.setText(tblClientes.getModel().getValueAt(setar, 2).toString());
         txtTelefone.setText(tblClientes.getModel().getValueAt(setar, 3).toString());
         txtEmail.setText(tblClientes.getModel().getValueAt(setar, 4).toString());
+        btnInserir.setEnabled(false);
     }
 
     /**
@@ -368,16 +373,19 @@ public class TelaClientes extends javax.swing.JInternalFrame {
     private void btnInserirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInserirActionPerformed
         // TODO add your handling code here:
         adicionar();
+        consultar();
     }//GEN-LAST:event_btnInserirActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         // TODO add your handling code here:
         alterar();
+        consultar();
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletarActionPerformed
         // TODO add your handling code here:
         remover();
+        consultar();
     }//GEN-LAST:event_btnDeletarActionPerformed
 
     private void txtBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscarActionPerformed
@@ -403,6 +411,7 @@ public class TelaClientes extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         txtid.setVisible(false);
         lblid.setVisible(false);
+        consultar();
     }//GEN-LAST:event_formComponentShown
 
 
