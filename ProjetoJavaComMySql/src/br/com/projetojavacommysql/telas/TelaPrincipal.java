@@ -182,6 +182,12 @@ public class TelaPrincipal extends javax.swing.JFrame {
         Date data = new Date();
         DateFormat formatador = DateFormat.getDateInstance(DateFormat.SHORT);
         lbl_data.setText(formatador.format(data));
+        
+         TelaClientes clientes = new TelaClientes();
+
+        desktop.add(clientes);
+        clientes.setVisible(true);
+        
     }//GEN-LAST:event_formWindowActivated
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
@@ -202,15 +208,17 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private void menuCadUsuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuCadUsuActionPerformed
         // TODO add your handling code here:
         TelaUsuario usuario = new TelaUsuario();
-        usuario.setVisible(true);
+
         desktop.add(usuario);
+        usuario.setVisible(true);
     }//GEN-LAST:event_menuCadUsuActionPerformed
 
     private void menuCadCliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuCadCliActionPerformed
         // TODO add your handling code here:
         TelaClientes clientes = new TelaClientes();
-        clientes.setVisible(true);
+
         desktop.add(clientes);
+        clientes.setVisible(true);
     }//GEN-LAST:event_menuCadCliActionPerformed
 
     /**
